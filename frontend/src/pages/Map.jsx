@@ -342,21 +342,27 @@ const MapPage = () => {
     setSavedBoothId(b.id);
   }, []);
 
-  // ── Maps key missing error ─────────────────────────────────────────────
+  // ── Maps Loading/Error ───────────────────────────────────────────────────
   if (mapsError || !MAPS_KEY || MAPS_KEY === '## enter your google map key') {
     return (
-      <div className="h-full flex flex-col items-center justify-center p-8 text-center bg-[#F5F5F0]">
-        <div className="text-5xl mb-4">🗺️</div>
-        <h2 className="font-bold text-gray-800 text-lg mb-2">Maps Unavailable</h2>
-        <p className="text-sm text-gray-500 mb-6">Google Maps could not be loaded. Please check your API key.</p>
-        <a
-          href="https://electoralsearch.eci.gov.in/"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="flex items-center gap-2 px-6 py-3 bg-[#F5831F] text-white rounded-xl font-bold"
-        >
-          Find booth on ECI Website <ExternalLink size={16} aria-hidden="true" />
-        </a>
+      <div className="h-full flex flex-col items-center justify-center p-8 text-center bg-gray-50">
+        <div className="animate-bounce text-4xl mb-4">📍</div>
+        <p className="text-gray-500 mb-4">Setting up your map...</p>
+        <button onClick={() => window.location.reload()} className="text-primary font-bold underline">Retry manually</button>
+      </div>
+    );
+  }
+
+  if (!ready) {
+    return (
+      <div className="h-full flex flex-col items-center justify-center bg-gray-50">
+        <div className="relative">
+          <div className="w-16 h-16 border-4 border-primary-100 border-t-primary rounded-full animate-spin"></div>
+          <div className="absolute inset-0 flex items-center justify-center">
+            <span className="text-xl animate-pulse">🗺️</span>
+          </div>
+        </div>
+        <p className="mt-4 text-sm font-bold text-gray-400 uppercase tracking-widest animate-pulse">Loading Pollaris Map...</p>
       </div>
     );
   }
