@@ -3,7 +3,7 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Header from './components/Header';
 import BottomNav from './components/BottomNav';
 
-const Home = lazy(() => import('./pages/Home'));
+import Home from './pages/Home';
 const Guide = lazy(() => import('./pages/Guide'));
 const Candidates = lazy(() => import('./pages/Candidates'));
 const Report = lazy(() => import('./pages/Report'));
