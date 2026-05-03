@@ -14,10 +14,16 @@ const firebaseConfig = {
   measurementId: "G-POLLARIS-GA"
 };
 
-// Initialize Firebase
-const app = initializeApp(firebaseConfig);
-const analytics = typeof window !== 'undefined' ? getAnalytics(app) : null;
-const db = getFirestore(app);
-const auth = getAuth(app);
+// Initialize Firebase safely
+let app, analytics, db, auth;
+
+try {
+  app = initializeApp(firebaseConfig);
+  analytics = typeof window !== 'undefined' ? getAnalytics(app) : null;
+  db = getFirestore(app);
+  auth = getAuth(app);
+} catch (error) {
+  console.error("Firebase initialization failed:", error);
+}
 
 export { app, analytics, db, auth };
