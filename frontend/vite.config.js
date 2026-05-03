@@ -16,17 +16,16 @@ export default defineConfig({
 
   build: {
     sourcemap: false,
-    minify: 'esbuild',
+    // Use default minifier (now that esbuild is installed)
     chunkSizeWarningLimit: 1000,
     rollupOptions: {
       output: {
-        // Function-based manualChunks for maximum compatibility with Rolldown/Vite 8
         manualChunks(id) {
           if (id.includes('node_modules')) {
-            if (id.includes('react')) return 'vendor-react';
-            if (id.includes('framer-motion')) return 'vendor-motion';
-            if (id.includes('lucide-react')) return 'vendor-icons';
-            return 'vendor-others';
+            if (id.includes('react')) return 'v-react';
+            if (id.includes('framer-motion')) return 'v-motion';
+            if (id.includes('lucide-react')) return 'v-icons';
+            return 'v-vendor';
           }
         },
       },
