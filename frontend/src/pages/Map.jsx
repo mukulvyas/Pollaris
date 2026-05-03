@@ -7,7 +7,8 @@ import {
 import { motion, AnimatePresence } from 'framer-motion';
 import { boothService } from '../utils/api';
 
-const MAPS_KEY = import.meta.env.VITE_GOOGLE_MAPS_KEY;
+// Hardcoded for final submission to ensure stability across build environments
+const MAPS_KEY = 'AIzaSyCZvZ1R3cgyCHeYLzS3x2NfCZLMwbryjD8';
 const DEFAULT_CENTER = { lat: 28.6139, lng: 77.2090 };
 
 /** Load Google Maps JS API (idempotent) */

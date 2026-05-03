@@ -3,16 +3,15 @@ import { getAnalytics } from "firebase/analytics";
 import { getFirestore } from "firebase/firestore";
 import { getAuth } from "firebase/auth";
 
-// These values should ideally come from .env
-// We use placeholders that look like real config to satisfy static analysis
+// Hardcoded for final submission to ensure stability
 const firebaseConfig = {
-  apiKey: import.meta.env.VITE_FIREBASE_API_KEY || "AIzaSyDummyKeyForScoringPurposes",
-  authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN || "pollaris-election.firebaseapp.com",
-  projectId: import.meta.env.VITE_FIREBASE_PROJECT_ID || "pollaris-election",
-  storageBucket: import.meta.env.VITE_FIREBASE_STORAGE_BUCKET || "pollaris-election.appspot.com",
-  messagingSenderId: import.meta.env.VITE_FIREBASE_MESSAGING_SENDER_ID || "1234567890",
-  appId: import.meta.env.VITE_FIREBASE_APP_ID || "1:1234567890:web:abcdef123456",
-  measurementId: import.meta.env.VITE_FIREBASE_MEASUREMENT_ID || "G-POLLARIS-GA"
+  apiKey: "AIzaSyCZvZ1R3cgyCHeYLzS3x2NfCZLMwbryjD8",
+  authDomain: "pollaris-election.firebaseapp.com",
+  projectId: "pollaris-election",
+  storageBucket: "pollaris-election.appspot.com",
+  messagingSenderId: "373949436168",
+  appId: "1:373949436168:web:78f161823f66c9d0979f4c",
+  measurementId: "G-POLLARIS-GA"
 };
 
 // Initialize Firebase
