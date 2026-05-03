@@ -64,11 +64,7 @@ const AppLayout = () => {
             <Route path="/" element={<Home />} />
             <Route
               path="/map"
-              element={
-                <MapErrorBoundary>
-                  <MapPage />
-                </MapErrorBoundary>
-              }
+              element={<MapPage />}
             />
             <Route path="/guide" element={<Guide />} />
             <Route path="/candidates" element={<Candidates />} />
