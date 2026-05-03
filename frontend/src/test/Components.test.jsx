@@ -92,3 +92,30 @@ describe('TimelineItem', () => {
     expect(screen.getByText(/Cast your vote/)).toBeDefined();
   });
 });
+// ── Skeleton ──────────────────────────────────────────────────────────────
+import Skeleton from '../components/Skeleton';
+describe('Skeleton', () => {
+  it('renders with correct className', () => {
+    const { container } = render(<Skeleton className="custom-class" />);
+    expect(container.firstChild.classList.contains('custom-class')).toBe(true);
+    expect(container.firstChild.classList.contains('animate-pulse')).toBe(true);
+  });
+});
+
+// ── ErrorBoundary ─────────────────────────────────────────────────────────
+import ErrorBoundary from '../components/ErrorBoundary';
+describe('ErrorBoundary', () => {
+  it('renders children when no error', () => {
+    render(<ErrorBoundary><div>Child</div></ErrorBoundary>);
+    expect(screen.getByText('Child')).toBeDefined();
+  });
+
+  it('renders error message when error occurs', () => {
+    const ThrowError = () => { throw new Error('Test error'); };
+    // Prevent console.error from cluttering test output
+    vi.spyOn(console, 'error').mockImplementation(() => {});
+    
+    render(<ErrorBoundary><ThrowError /></ErrorBoundary>);
+    expect(screen.getByText('Something went wrong')).toBeDefined();
+  });
+});

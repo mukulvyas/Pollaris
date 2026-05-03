@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { Search, Star, GitCompare, Loader2, X, GraduationCap, BadgeIndianRupee, Scale } from 'lucide-react';
 import { candidateService } from '../utils/api';
 import useUserStore from '../store/userStore';
+import Skeleton from '../components/Skeleton';
 
 /**
  * CandidateItem — Memoized component for displaying individual candidate details.
@@ -151,9 +152,22 @@ const Candidates = () => {
       {/* Candidates List */}
       <div className="flex-1 overflow-y-auto px-5 pt-4 pb-[140px]" role="list">
         {isLoading ? (
-          <div className="flex flex-col items-center justify-center py-20 gap-4" aria-live="polite">
-            <Loader2 className="text-[#F5831F] animate-spin" size={32} />
-            <p className="text-gray-500 font-medium">Fetching verified records...</p>
+          <div className="space-y-4">
+            {[1, 2, 3, 4, 5].map(i => (
+              <div key={i} className="p-4 rounded-[12px] border border-gray-100 bg-white">
+                <div className="flex items-start justify-between gap-3 mb-4">
+                  <div className="flex-1 space-y-2">
+                    <Skeleton width="60%" height="20px" />
+                    <Skeleton width="40%" height="16px" />
+                  </div>
+                  <Skeleton width="48px" height="48px" circle />
+                </div>
+                <div className="space-y-2 pt-3 border-t border-gray-50">
+                  <Skeleton width="100%" height="12px" />
+                  <Skeleton width="80%" height="12px" />
+                </div>
+              </div>
+            ))}
           </div>
         ) : error ? (
           <div className="bg-red-50 p-4 rounded-xl border border-red-100 text-center" role="alert">
