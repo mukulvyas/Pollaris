@@ -3,26 +3,21 @@
 FROM node:20-slim AS frontend-build
 WORKDIR /app/frontend
 
-# Build-time arguments for Vite
-ARG VITE_GOOGLE_MAPS_KEY
-ARG VITE_GOOGLE_ANALYTICS_ID
-ARG VITE_FIREBASE_API_KEY
-ARG VITE_FIREBASE_AUTH_DOMAIN
-ARG VITE_FIREBASE_PROJECT_ID
-
-# Set them as environment variables for the npm run build step
-ENV VITE_GOOGLE_MAPS_KEY=$VITE_GOOGLE_MAPS_KEY \
-    VITE_GOOGLE_ANALYTICS_ID=$VITE_GOOGLE_ANALYTICS_ID \
-    VITE_FIREBASE_API_KEY=$VITE_FIREBASE_API_KEY \
-    VITE_FIREBASE_AUTH_DOMAIN=$VITE_FIREBASE_AUTH_DOMAIN \
-    VITE_FIREBASE_PROJECT_ID=$VITE_FIREBASE_PROJECT_ID
-
 # Install dependencies
 COPY frontend/package*.json ./
 RUN npm install
 
 # Copy frontend source
 COPY frontend/ .
+
+# Build-time arguments for Vite (Must be declared here to be used in RUN npm run build)
+ARG VITE_GOOGLE_MAPS_KEY
+ARG VITE_GOOGLE_ANALYTICS_ID
+ARG VITE_FIREBASE_API_KEY
+
+ENV VITE_GOOGLE_MAPS_KEY=$VITE_GOOGLE_MAPS_KEY
+ENV VITE_GOOGLE_ANALYTICS_ID=$VITE_GOOGLE_ANALYTICS_ID
+ENV VITE_FIREBASE_API_KEY=$VITE_FIREBASE_API_KEY
 
 # Build the production bundle
 RUN npm run build
