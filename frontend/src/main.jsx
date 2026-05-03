@@ -2,12 +2,7 @@ import React from 'react'
 import ReactDOM from 'react-dom/client'
 import App from './App.jsx'
 import './index.css'
-// Initialize secondary services safely
-try {
-  import('./utils/firebase');
-} catch (e) {
-  console.error('Firebase init failed', e);
-}
+import './utils/firebase';
 
 import ErrorBoundary from './components/ErrorBoundary'
 

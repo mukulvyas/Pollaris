@@ -229,9 +229,6 @@ const MapPage = () => {
       position: { lat: booth.lat, lng: booth.lng },
       map: mapRef.current,
       title: booth.name,
-      icon: {
-        url: 'https://maps.google.com/mapfiles/ms/icons/orange-dot.png',
-      },
     });
     const infoWindow = new window.google.maps.InfoWindow({
       content: `<div style="font-family:Inter,sans-serif;padding:4px"><b>${booth.name}</b><br/><span style="color:#666;font-size:12px">${booth.address || ''}</span></div>`,
