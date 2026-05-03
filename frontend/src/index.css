@@ -1,0 +1,165 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html, body, #root {
+    height: 100%;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    /* overscroll-behavior-y: contain; /* Enable pull-to-refresh if browser allows */
+  }
+
+  body {
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    background: #E5E5E5; /* Desktop background */
+  }
+}
+
+/* Main App Container - The Phone Frame */
+.phone-frame {
+  height: 100vh;
+  height: 100dvh; /* Dynamic viewport height — accounts for mobile browser chrome */
+  width: 100vw;
+  max-width: 430px;
+  margin: 0 auto;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  background: #F5F5F0;
+  overflow: hidden;
+  box-shadow: 0 0 60px rgba(0, 0, 0, 0.15);
+}
+
+/* Mobile Breakpoints */
+@media (max-width: 430px) {
+  .phone-frame {
+    max-width: 100vw;
+    border-radius: 0;
+    box-shadow: none;
+  }
+  body {
+    background: #F5F5F0;
+  }
+}
+
+/* Layout Components */
+.fixed-header {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 60px;
+  background: white;
+  border-bottom: 1px solid #E0E0E0;
+  z-index: 50;
+  display: flex;
+  align-items: center;
+  padding: 0 16px;
+}
+
+.scroll-area {
+  flex: 1;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding-top: 60px;
+  padding-bottom: calc(70px + env(safe-area-inset-bottom, 0px));
+  -webkit-overflow-scrolling: touch;
+}
+
+.chat-padding {
+  padding-bottom: calc(130px + env(safe-area-inset-bottom, 0px)) !important;
+}
+
+.extra-bottom-padding {
+  padding-bottom: 120px !important;
+}
+
+.scroll-area::-webkit-scrollbar {
+  display: none;
+}
+
+.fixed-bottom-nav {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: calc(65px + env(safe-area-inset-bottom, 0px));
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+  background: white;
+  border-top: 1px solid #E0E0E0;
+  z-index: 50;
+}
+
+/* Input bar position (only for Home/Chat) */
+.fixed-input-bar {
+  position: absolute;
+  bottom: calc(65px + env(safe-area-inset-bottom, 0px));
+  left: 0;
+  right: 0;
+  height: 60px;
+  background: white;
+  border-top: 1px solid #E0E0E0;
+  z-index: 40;
+  padding: 8px 16px;
+  display: flex;
+  align-items: center;
+}
+
+/* Glass and Gradients (keeping existing useful ones) */
+.gradient-orange {
+  background: linear-gradient(135deg, #F5831F 0%, #FFB74D 100%);
+}
+
+.gradient-green {
+  background: linear-gradient(135deg, #1B5E20 0%, #4CAF50 100%);
+}
+
+.mic-glow {
+  box-shadow: 0 0 0 0 rgba(245, 131, 31, 0.5);
+  animation: micPulse 2s ease-in-out infinite;
+}
+
+.gradient-blue {
+  background: linear-gradient(135deg, #1A237E 0%, #2196F3 100%);
+}
+
+@keyframes micPulse {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(245, 131, 31, 0.5); }
+  50% { box-shadow: 0 0 0 12px rgba(245, 131, 31, 0); }
+}
+
+/* ── Skip-to-content link (Change 1B) ────────────────────────────────────── */
+.skip-link {
+  position: absolute;
+  top: -40px;
+  left: 0;
+  background: #F5831F;
+  color: white;
+  padding: 8px 16px;
+  z-index: 9999;
+  border-radius: 0 0 8px 0;
+  font-size: 14px;
+  text-decoration: none;
+  font-weight: 700;
+  transition: top 0.2s;
+}
+.skip-link:focus {
+  top: 0;
+}
+
+/* ── Focus ring styling (Change 1C) ──────────────────────────────────────── */
+*:focus-visible {
+  outline: 3px solid #F5831F;
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+button:focus-visible,
+a:focus-visible,
+input:focus-visible {
+  outline: 3px solid #F5831F;
+  outline-offset: 2px;
+}

@@ -1,0 +1,11 @@
+.git
+.gitignore
+backend/venv/
+backend/__pycache__/
+backend/.env
+.env
+*.db
+*.sqlite
+backend/data/
+frontend/node_modules/
+frontend/dist/
