@@ -1,5 +1,5 @@
-import React from 'react';
-import { NavLink } from 'react-router-dom';
+import React, { memo, useCallback } from 'react';
+import { NavLink, useNavigate } from 'react-router-dom';
 import { Home, MapPin, BookOpen, HelpCircle, Users } from 'lucide-react';
 
 const navItems = [
@@ -10,7 +10,17 @@ const navItems = [
   { name: 'HELP', path: '/help', icon: HelpCircle, ariaLabel: 'Go to Help and Report Problem' },
 ];
 
-const BottomNav = () => {
+/**
+ * BottomNav — persistent app navigation bar.
+ * Fires a Google Analytics page_view event on every tab click.
+ */
+const BottomNav = memo(() => {
+  const handleNavClick = useCallback((pageName) => {
+    if (typeof window.trackEvent === 'function') {
+      window.trackEvent('navigation_click', { page: pageName });
+    }
+  }, []);
+
   return (
     <nav className="fixed-bottom-nav flex justify-around items-center" aria-label="Main navigation">
       {navItems.map((item) => {
@@ -21,6 +31,7 @@ const BottomNav = () => {
             to={item.path}
             id={`nav-${item.name.toLowerCase()}`}
             aria-label={item.ariaLabel}
+            onClick={() => handleNavClick(item.name)}
             className={({ isActive }) =>
               `flex flex-col items-center justify-center flex-1 h-full gap-1 transition-colors ${
                 isActive ? 'text-primary' : 'text-gray-400'
@@ -36,6 +47,7 @@ const BottomNav = () => {
       })}
     </nav>
   );
-};
+});
+BottomNav.displayName = 'BottomNav';
 
 export default BottomNav;

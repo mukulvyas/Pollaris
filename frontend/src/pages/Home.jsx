@@ -113,6 +113,11 @@ const Home = () => {
     setIsSpeaking(false);
     setSpeakingIdx(null);
 
+    // GA: track chat message sent
+    if (typeof window.trackEvent === 'function') {
+      window.trackEvent('chat_message_sent', { language, message_length: msg.length });
+    }
+
     try {
       const sid = sessionId || `sess_${Date.now()}`;
       if (!sessionId) setSessionId(sid);
@@ -120,8 +125,7 @@ const Home = () => {
       const res = await chatService.send(msg, sid, language);
       const reply = res.data?.reply || 'Sorry, I could not get a response. Please try again.';
       addMessage('assistant', reply);
-    } catch (err) {
-      console.error('Chat error:', err);
+    } catch {
       addMessage('assistant',
         'Sorry, I am having trouble connecting to the server. Please make sure the backend is running and try again. 🙏'
       );
@@ -139,7 +143,7 @@ const Home = () => {
   };
 
   // ── Voice input (Mic) ───────────────────────────────────────────────────────
-  const handleMic = () => {
+  const handleMic = useCallback(() => {
     const SR = getSpeechRecognition();
     if (!SR) {
       addMessage('assistant', 'Voice input is not supported in your browser. Please type your question.');
@@ -150,6 +154,11 @@ const Home = () => {
       recognitionRef.current?.stop();
       setIsListening(false);
       return;
+    }
+
+    // GA: track voice input usage
+    if (typeof window.trackEvent === 'function') {
+      window.trackEvent('voice_input_started', { language });
     }
 
     const rec = new SR();
@@ -168,8 +177,8 @@ const Home = () => {
       setIsListening(false);
     };
 
-    try { rec.start(); } catch(e) { setIsListening(false); }
-  };
+    try { rec.start(); } catch { setIsListening(false); }
+  }, [isListening, language, addMessage]);
 
   // ── TTS ─────────────────────────────────────────────────────────────────────
   const handleSpeak = (text, idx) => {
@@ -190,10 +199,14 @@ const Home = () => {
   };
 
   // ── Proceed ─────────────────────────────────────────────────────────────────
-  const handleProceed = () => {
+  const handleProceed = useCallback(() => {
     setIsProceeded(true);
     completeOnboarding();
-  };
+    // GA: track onboarding completion
+    if (typeof window.trackEvent === 'function') {
+      window.trackEvent('onboarding_complete', { language });
+    }
+  }, [completeOnboarding, language]);
 
   // ── Suggestion chips ────────────────────────────────────────────────────────
   const CHIPS = [

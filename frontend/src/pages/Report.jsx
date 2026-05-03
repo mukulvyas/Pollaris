@@ -75,7 +75,6 @@ const Report = () => {
     try {
       let imageData = null;
       if (image) {
-        // Convert image to base64 for submission
         imageData = await new Promise((resolve) => {
           const reader = new FileReader();
           reader.onloadend = () => resolve(reader.result);
@@ -92,14 +91,17 @@ const Report = () => {
         imageData
       );
 
+      // GA: track report submission
+      if (typeof window.trackEvent === 'function') {
+        window.trackEvent('report_submitted', { category: selected, has_image: !!imageData });
+      }
+
       setSubmitted(true);
-      // Reset state
       setSelected('');
       setDesc('');
       setImage(null);
       setPreview(null);
-    } catch (err) {
-      console.error('Report submission failed:', err);
+    } catch {
       alert('Failed to submit report. Please check your connection.');
     } finally {
       setIsLoading(false);
