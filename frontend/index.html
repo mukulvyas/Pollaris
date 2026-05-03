@@ -32,12 +32,12 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
 
     <!-- Google Analytics (gtag.js) -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-POLLARIS-GA"></script>
     <script>
       window.dataLayer = window.dataLayer || [];
       function gtag(){dataLayer.push(arguments);}
       gtag('js', new Date());
-      gtag('config', 'G-XXXXXXXXXX', {
+      gtag('config', 'G-POLLARIS-GA', {
         page_title: 'Pollaris',
         send_page_view: true,
         anonymize_ip: true
@@ -45,8 +45,13 @@
 
       // Track key user events
       window.trackEvent = function(eventName, params) {
+        // Global GTAG
         if (typeof gtag === 'function') {
           gtag('event', eventName, params || {});
+        }
+        // Custom console log for debug in dev
+        if (location.hostname === 'localhost') {
+          console.log(`[GA Event]: ${eventName}`, params);
         }
       };
     </script>

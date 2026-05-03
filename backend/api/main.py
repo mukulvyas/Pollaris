@@ -42,6 +42,36 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+# ── Security Headers Middleware ─────────────────────────────
+@app.middleware("http")
+async def add_security_headers(request, call_next):
+    response = await call_next(request)
+    response.headers["X-Content-Type-Options"] = "nosniff"
+    response.headers["X-Frame-Options"] = "DENY"
+    response.headers["X-XSS-Protection"] = "1; mode=block"
+    response.headers["Strict-Transport-Security"] = "max-age=31536000; includeSubDomains"
+    response.headers["Content-Security-Policy"] = "default-src 'self'; script-src 'self' 'unsafe-inline' https://www.googletagmanager.com https://maps.googleapis.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https://maps.gstatic.com https://*.googleapis.com; connect-src 'self' https://*.googleapis.com https://*.firebaseio.com https://*.google-analytics.com;"
+    return response
+
+# ── Simple Rate Limiter ─────────────────────────────────────
+from collections import defaultdict
+import time
+
+RATE_LIMIT = 60 # Requests per minute
+user_requests = defaultdict(list)
+
+@app.middleware("http")
+async def rate_limit_middleware(request, call_next):
+    if request.url.path.startswith("/api/chat") or request.url.path.startswith("/api/report"):
+        client_ip = request.client.host
+        now = time.time()
+        # Clean old requests
+        user_requests[client_ip] = [t for t in user_requests[client_ip] if now - t < 60]
+        if len(user_requests[client_ip]) >= RATE_LIMIT:
+            raise HTTPException(status_code=429, detail="Too many requests. Please slow down.")
+        user_requests[client_ip].append(now)
+    return await call_next(request)
+
 
 # ── Schemas ───────────────────────────────────────────────
 from pydantic import BaseModel, Field, field_validator
@@ -87,6 +117,7 @@ class ComplaintRequest(BaseModel):
     description: str
     lat: Optional[float] = None
     lng: Optional[float] = None
+    image: Optional[str] = None # Base64 encoded image string
 
 
 class UserSetupRequest(BaseModel):

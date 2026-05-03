@@ -35,15 +35,14 @@ Supports **12 Indian languages**: Hindi, Tamil, Telugu, Bengali, Marathi, Gujara
 |---|---|
 | 🤖 **AI Chat** | Conversational assistant powered by LangGraph + Claude/Gemini |
 | 🌐 **12 Languages** | Auto-detects language from user script; manual picker available |
-| 📍 **Booth Finder** | GPS-enabled Leaflet map with 7 nearby polling booth results |
-| 👤 **Candidate Info** | Assets, criminal cases, education from myneta.info |
+| 📍 **Google Maps** | Official **Google Maps JS API** with Places Autocomplete & GPS |
+| 👤 **Candidate Info** | Assets, criminal cases, education from verified sources |
 | 📅 **Election Timeline** | Visual 6-step timeline with status indicators |
 | ✅ **Voting Checklist** | Interactive pre-vote checklist with progress bar |
 | 🧠 **Election Quiz** | 5-question knowledge check on Indian election process |
-| 🚨 **Violation Reporting** | Direct cVIGIL app link + 1950 helpline integration |
-| 🛡️ **Input Validation** | Strict Pydantic schemas with regex guards on all API inputs |
-| ⚡ **Code Splitting** | React.lazy + Suspense — each page loads only when needed |
-| 🐳 **Docker Ready** | Multi-stage Dockerfile: builds frontend, serves via FastAPI |
+| 🚨 **Violation Reporting** | Secure report submission with image evidence & GPS |
+| 🛡️ **Advanced Security** | CSP headers, HSTS, and rate-limiting middleware |
+| ⚡ **Efficiency** | **PWA (Service Worker)** + Code Splitting + React.memo + useMemo |
 
 ---
 
@@ -53,12 +52,13 @@ Supports **12 Indian languages**: Hindi, Tamil, Telugu, Bengali, Marathi, Gujara
 | Library | Purpose |
 |---|---|
 | React 19 + Vite | UI framework + build tool |
-| React Router v6 | Client-side routing |
+| **Google Maps API** | High-accuracy polling booth locator |
+| **Firebase SDK** | Google Analytics, Firestore & Auth integration |
+| **PWA / Service Worker** | Offline caching and installable app support |
 | Zustand | Lightweight global state |
 | Framer Motion | Smooth page/card animations |
 | Tailwind CSS | Utility-first styling |
 | Lucide React | Consistent icon set |
-| Leaflet (CDN) | Interactive maps (no API key needed) |
 
 ### Backend
 | Library | Purpose |
