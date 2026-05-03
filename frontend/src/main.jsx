@@ -2,15 +2,11 @@ import React from 'react'
 import ReactDOM from 'react-dom/client'
 import App from './App.jsx'
 import './index.css'
-import './utils/firebase' // Initialize Firebase
-
-// Register Service Worker for PWA
-if ('serviceWorker' in navigator) {
-  window.addEventListener('load', () => {
-    navigator.serviceWorker.register('/sw.js')
-      .then(reg => console.log('SW registered'))
-      .catch(err => console.log('SW registration failed', err));
-  });
+// Initialize secondary services safely
+try {
+  import('./utils/firebase');
+} catch (e) {
+  console.error('Firebase init failed', e);
 }
 
 import ErrorBoundary from './components/ErrorBoundary'
