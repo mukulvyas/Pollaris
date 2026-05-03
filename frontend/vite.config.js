@@ -15,27 +15,24 @@ export default defineConfig({
   },
 
   build: {
-    // Enable source maps for debugging
     sourcemap: false,
-    // Minify with esbuild (faster)
     minify: 'esbuild',
-    // Chunk size warning limit
-    chunkSizeWarningLimit: 600,
+    chunkSizeWarningLimit: 1000,
     rollupOptions: {
       output: {
-        // Manual chunk splitting for better caching
-        manualChunks: {
-          'react-vendor': ['react', 'react-dom', 'react-router-dom'],
-          'motion': ['framer-motion'],
-          'icons': ['lucide-react'],
-          'state': ['zustand'],
-          'http': ['axios'],
+        // Function-based manualChunks for maximum compatibility with Rolldown/Vite 8
+        manualChunks(id) {
+          if (id.includes('node_modules')) {
+            if (id.includes('react')) return 'vendor-react';
+            if (id.includes('framer-motion')) return 'vendor-motion';
+            if (id.includes('lucide-react')) return 'vendor-icons';
+            return 'vendor-others';
+          }
         },
       },
     },
   },
 
-  // Optimise deps pre-bundling
   optimizeDeps: {
     include: ['react', 'react-dom', 'react-router-dom', 'framer-motion', 'lucide-react', 'axios', 'zustand'],
   },
